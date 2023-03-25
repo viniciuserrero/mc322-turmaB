@@ -67,25 +67,30 @@ public class Cliente {
 	        }
 		 
 //		 verificando se todos os dígitos são iguais(passo 3)
-		 for(int i=0; i<cpf.length(); i++) {
-			 if(cpf.charAt(0) != cpf.charAt(i)){
-				 break;
+		 
+		 for(int i=1; i<12; i++){
+			 
+			 if(i==11) {
+				 return false;
 			 }
-			 return false;
+			 
+			 if( cpf.charAt(i) == cpf.charAt(0)){
+				 continue;
+			 }
+			 break;
 		 }
 		 
 //		 calculando digitos verificadores (passo 4)
-		 int[] fatores_d1={10, 9, 8, 7, 6, 5, 4 ,3, 2, 0};
-		 int[] fatores_d2={11, 10, 9, 8, 7, 6, 5, 4 ,3, 2};
-		 int soma_d1, soma_d2, soma_d3, num;
-		 soma_d1 = soma_d2 = soma_d3 = num = 0;
+		 int[] fatores={11, 10, 9, 8, 7, 6, 5, 4 ,3, 2, 0};
+		 int soma_d1, soma_d2, num;
+		 soma_d1 = soma_d2 = num = 0;
 		 
 		 for(int i=0; i<10; i++) {
 //			 convertendo char na posição i para int
 			 num = Character.digit(cpf.charAt(i), 10);
 			 
-			 soma_d1 += num*fatores_d1[i];
-			 soma_d2 += num*fatores_d2[i];
+			 soma_d1 += num*fatores[i+1];
+			 soma_d2 += num*fatores[i];
 		 }
 		 
 //		 dividindo por 11 para obter digitos verificadores
@@ -112,4 +117,8 @@ public class Cliente {
 		 
 		 return false;
 	}
+	 
+	 public String toString() {
+		 return " O cliente " + nome + ", com número de CPF " + cpf + ", nascido em " + dataNascimento + ", mora no endereço" + endereco;
+	 }
 }
