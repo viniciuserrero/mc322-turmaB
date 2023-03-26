@@ -9,28 +9,28 @@ public class Cliente {
 
 	 // Construtor
 	 public Cliente ( String nome , String cpf , String dataNascimento , int idade , String endereco ) {
-	 this.nome = nome ;
-	 this.cpf = cpf ;
-	 this.dataNascimento = dataNascimento ;
-	 this.idade = idade ;
-	 this.endereco = endereco ;
+		 this.nome = nome ;
+		 this.cpf = cpf ;
+		 this.dataNascimento = dataNascimento ;
+		 this.idade = idade ;
+		 this.endereco = endereco ;
 	 }
 
 	 // Getters e setters
 	 public String getNome () {
-	 return nome ;
+		 return nome ;
 	 }
 
 	 public void setNome ( String nome ) {
-	 this.nome = nome ;
+		 this.nome = nome ;
 	 }
 
 	 public String getcpf () {
-	 return cpf ;
+		 return cpf ;
 	 }
 
 	 public void setcpf ( String cpf ) {
-	 this.cpf = cpf ;
+		 this.cpf = cpf ;
 	 }
 	 
 	 public String getdataNascimento () {
@@ -74,7 +74,7 @@ public class Cliente {
 				 return false;
 			 }
 			 
-			 if( cpf.charAt(i) == cpf.charAt(0)){
+			 if(cpf.charAt(i) == cpf.charAt(0)){
 				 continue;
 			 }
 			 break;
