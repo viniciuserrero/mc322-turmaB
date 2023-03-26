@@ -25,11 +25,11 @@ public class Cliente {
 		 this.nome = nome ;
 	 }
 
-	 public String getcpf () {
+	 public String getCPF () {
 		 return cpf ;
 	 }
 
-	 public void setcpf ( String cpf ) {
+	 public void setCPF ( String cpf ) {
 		 this.cpf = cpf ;
 	 }
 	 
@@ -41,11 +41,11 @@ public class Cliente {
 	 this.dataNascimento = dataNascimento ;
 	 }
 
-	 public int getidade () {
+	 public int getIdade () {
 	 return idade ;
 	 }
 
-	 public void setidade ( int idade ) {
+	 public void setIdade ( int idade ) {
 	 this.idade = idade ;
 	 }
 
@@ -58,7 +58,7 @@ public class Cliente {
 	 }
 	 
 	 public boolean validarCPF( String cpf) {
-//		 removendo caracteres que não são números(passo 1)
+//		 		 removendo caracteres que não são números(passo 1)
 		 cpf = cpf.replaceAll("[^\\d]", "");
 		 
 //		 verificando tamanho da variável(passo 2)
@@ -68,17 +68,9 @@ public class Cliente {
 		 
 //		 verificando se todos os dígitos são iguais(passo 3)
 		 
-		 for(int i=1; i<12; i++){
-			 
-			 if(i==11) {
-				 return false;
-			 }
-			 
-			 if(cpf.charAt(i) == cpf.charAt(0)){
-				 continue;
-			 }
-			 break;
-		 }
+		 if (cpf.matches("(\\d)\\1{10}")) {
+		        return false;
+		    }
 		 
 //		 calculando digitos verificadores (passo 4)
 		 int[] fatores={11, 10, 9, 8, 7, 6, 5, 4 ,3, 2, 0};
@@ -88,23 +80,19 @@ public class Cliente {
 		 for(int i=0; i<10; i++) {
 //			 convertendo char na posição i para int
 			 num = Character.digit(cpf.charAt(i), 10);
-			 
 			 soma_d1 += num*fatores[i+1];
 			 soma_d2 += num*fatores[i];
 		 }
-		 
 //		 dividindo por 11 para obter digitos verificadores
-		 int resto_d1 = soma_d1%11; 
-		 int d1 = resto_d1;
-		 int resto_d2 = soma_d2%11;
-		 int d2 = resto_d2;
+		 int d1 = 11 - (soma_d1%11); 
+		 int d2 = 11 - (soma_d2%11);
 		 
 //		 verificando se o resto é 10 ou 11,
 //		 nesse caso o digito verificador será 0
-		 if (resto_d1 > 9) {
+		 if (d1 > 9) {
 			 d1 = 0;
 		 }
-		 if (resto_d2 > 9) {
+		 if (d2 > 9) {
 			 d2 = 0;
 		 }
 

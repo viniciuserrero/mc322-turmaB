@@ -13,27 +13,27 @@ public class Veiculo {
 	 }
 
 	 // Getters e setters
-	 public String getplaca () {
+	 public String getPlaca () {
 	 return placa ;
 	 }
 
-	 public void setplaca ( String placa ) {
+	 public void setPlaca ( String placa ) {
 	 this.placa = placa ;
 	 }
 
-	 public String getmarca () {
+	 public String getMarca () {
 	 return marca ;
 	 }
 
-	 public void setmarca ( String marca ) {
+	 public void setMarca ( String marca ) {
 	 this.marca = marca ;
 	 }
 
-	 public String getmodelo () {
+	 public String getModelo () {
 	 return modelo ;
 	 }
 
-	 public void setmodelo ( String modelo ) {
+	 public void setModelo ( String modelo ) {
 	 this.modelo = modelo ;
 	 }
 }

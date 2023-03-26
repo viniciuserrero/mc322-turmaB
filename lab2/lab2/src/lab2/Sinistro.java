@@ -14,15 +14,15 @@ public class Sinistro {
 	 }
 
 	 // Getters e setters
-	 public int getid () {
+	 public int getID () {
 	 return id ;
 	 }
 
-	 public String getdata () {
+	 public String getData () {
 	 return data ;
 	 }
 
-	 public void setdata ( String data ) {
+	 public void setData ( String data ) {
 	 this.data = data ;
 	 }
 
@@ -37,7 +37,7 @@ public class Sinistro {
 	 // Generate id
 	 private int generate_id() {
 		 UUID random_id = UUID.randomUUID();
-		 return random_id.hashCode();
+		 return (random_id.hashCode() & Integer.MAX_VALUE);
 	 }
 	 
 }
