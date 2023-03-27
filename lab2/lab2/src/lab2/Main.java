@@ -53,30 +53,30 @@ public class Main {
             }
 
               else if(input.equals("seguradora")) {
-                System.out.println("Digite o nome da seguradora:");
-                input = scanner.nextLine();
-                seguradora.setNome(input);
+                  System.out.println("Digite o nome da seguradora:");
+                  input = scanner.nextLine();
+                  seguradora.setNome(input);
 
-                System.out.println("Digite o telefone da seguradora:");
-                input = scanner.nextLine();
-                seguradora.setTelefone(input);
+                  System.out.println("Digite o telefone da seguradora:");
+                  input = scanner.nextLine();
+                  seguradora.setTelefone(input);
 
-                System.out.println("Digite o email da seguradora:");
-                input = scanner.nextLine();
-                seguradora.setEmail(input);
+                  System.out.println("Digite o email da seguradora:");
+                  input = scanner.nextLine();
+                  seguradora.setEmail(input);
 
-                System.out.println("Digite o endereço da seguradora:");
-                input = scanner.nextLine();
-                seguradora.setEndereco(input);
+                  System.out.println("Digite o endereço da seguradora:");
+                  input = scanner.nextLine();
+                  seguradora.setEndereco(input);
 
-                System.out.println("-------");
-                System.out.println("Registro da seguradora completo :) ");
-                System.out.println("Abaixo segue os dados da seguradora que você adicionou");
-                System.out.println("Nome:" + seguradora.getNome());
-                System.out.println("Telefone:" + seguradora.getTelefone());
-                System.out.println("Email:" + seguradora.getEmail());
-                System.out.println("Endereço:" + seguradora.getEndereco());
-                break;
+                  System.out.println("-------");
+                  System.out.println("Registro da seguradora completo :) ");
+                  System.out.println("Abaixo segue os dados da seguradora que você adicionou");
+                  System.out.println("Nome:" + seguradora.getNome());
+                  System.out.println("Telefone:" + seguradora.getTelefone());
+                  System.out.println("Email:" + seguradora.getEmail());
+                  System.out.println("Endereço:" + seguradora.getEndereco());
+                  break;
             }
               else if(input.equals("sinistro")){
                     System.out.println("Digite a data da ocorrência:");
@@ -97,25 +97,25 @@ public class Main {
               }
 
               else if(input.equals("veiculo") || input.equals("veículo")){
-                System.out.println("Digite a placa do carro:");
-                input = scanner.nextLine();
-                veiculo.setPlaca(input);
+                  System.out.println("Digite a placa do carro:");
+                  input = scanner.nextLine();
+                  veiculo.setPlaca(input);
 
-                System.out.println("Digite a marca do carro:");
-                input = scanner.nextLine();
-                veiculo.setMarca(input);
+                  System.out.println("Digite a marca do carro:");
+                  input = scanner.nextLine();
+                  veiculo.setMarca(input);
 
-                System.out.println("Digite o modelo do carro:");
-                input = scanner.nextLine();
-                veiculo.setModelo(input);
+                  System.out.println("Digite o modelo do carro:");
+                  input = scanner.nextLine();
+                  veiculo.setModelo(input);
 
-                System.out.println("-------");
-                System.out.println("Registro do carro completo :) ");
-                System.out.println("Abaixo segue os dados do carro que você adicionou");
-                System.out.println("Placa:" + veiculo.getPlaca());
-                System.out.println("Marca:" + veiculo.getMarca());
-                System.out.println("Modelo:" + veiculo.getModelo());
-                break;
+                  System.out.println("-------");
+                  System.out.println("Registro do carro completo :) ");
+                  System.out.println("Abaixo segue os dados do carro que você adicionou");
+                  System.out.println("Placa:" + veiculo.getPlaca());
+                  System.out.println("Marca:" + veiculo.getMarca());
+                  System.out.println("Modelo:" + veiculo.getModelo());
+                  break;
             }
 
               else {

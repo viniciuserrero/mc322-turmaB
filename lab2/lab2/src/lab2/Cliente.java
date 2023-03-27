@@ -34,27 +34,27 @@ public class Cliente {
      }
 
      public String getdataNascimento () {
-     return dataNascimento ;
+         return dataNascimento ;
      }
 
      public void setdataNascimento ( String dataNascimento ) {
-     this.dataNascimento = dataNascimento ;
+         this.dataNascimento = dataNascimento ;
      }
 
      public int getIdade () {
-     return idade ;
+         return idade ;
      }
 
      public void setIdade ( int idade ) {
-     this.idade = idade ;
+         this.idade = idade ;
      }
 
      public String getEndereco () {
-     return endereco ;
+         return endereco ;
      }
 
      public void setEndereco ( String endereco ) {
-     this.endereco = endereco ;
+         this.endereco = endereco ;
      }
 
      public boolean validarCPF( String cpf) {
