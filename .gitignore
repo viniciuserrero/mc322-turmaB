@@ -3,3 +3,5 @@
 **/.metadata
 **/bin
 *.class
+**/.coafile
+**/*.java.orig
