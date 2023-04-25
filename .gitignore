@@ -5,3 +5,4 @@
 *.class
 **/.coafile
 **/*.java.orig
+**/.vscode
