@@ -4,6 +4,9 @@ public class Sinistro {
     private int id ;
     private String data ;
     private String endereco ;
+    private Seguradora seguradora ;
+    private Veiculo veiculo ;
+    private Cliente cliente ;
 
     // Construtor
     public Sinistro (String data , String endereco ) {

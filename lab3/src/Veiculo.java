@@ -45,4 +45,7 @@ public class Veiculo {
         this.anoFabricacao = anoFabricacao ;
     }
 
+    public String toString() {
+        return "Placa: " + placa + "\nMarca: " + marca + "\nModelo: " + modelo + "\nAno de Fabricação: " + anoFabricacao;
+    }
 }
