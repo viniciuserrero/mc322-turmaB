@@ -1,5 +1,6 @@
-import java.time.LocalDate;
-import java.util.List;
+package lab4;
+
+import java.util.Date;
 
 public class ClientePJ extends Cliente {
     private final String cnpj;
@@ -16,12 +17,20 @@ public class ClientePJ extends Cliente {
         // chama o construtor da superclasse
         super(nome, endereco, false);
 
-        this.cnpj = Validacao.validarCNPJ(cnpj);
+        if(Validacao.validarCNPJ(cnpj)){
+            this.cnpj = cnpj;
+        }
+        
+        else{
+            this.cnpj = null;
+        }
+        
         this.dataFundacao = dataFundacao;
         this.qtdeFuncionarios = qtdeFuncionarios;
     }
 
     //Getters e setters
+    @Override
     public String getCNPJ() {
         return cnpj;
     }
@@ -56,9 +65,9 @@ public class ClientePJ extends Cliente {
 
     @Override
     public double calculaScore(){
-        float base = CalcSeguro.VALOR_BASE.getValor();
         int numCarros = super.getListaVeiculos().size();
-        return base*numCarros*(1+(this.qtdeFuncionarios)/100);
+        double base = CalcSeguro.VALOR_BASE.getFator();
+        double division = (1+(this.qtdeFuncionarios)/100);
+        return base*numCarros*division;
     }
-
 }

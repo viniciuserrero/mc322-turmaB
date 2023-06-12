@@ -1,3 +1,5 @@
+package lab4;
+
 public class Validacao {
 
     public static boolean validarCPF(String cpf) {
@@ -44,7 +46,7 @@ public class Validacao {
         int d2Recebido = Character.digit(cpf.charAt(10), 10);
 
         if (d1 == d1Recebido && d2 == d2Recebido) {
-            return True;
+            return true;
         }
 
         throw new IllegalArgumentException("CPF inválido: Dígitos verificadores não conferem");
@@ -90,17 +92,17 @@ public class Validacao {
             d2 = 0;
         }
 
-        int d1Recebido = Character.digit(cnpj.charAt(9), 10);
-        int d2Recebido = Character.digit(cnpj.charAt(10), 10);
+        int d1Recebido = Character.digit(cnpj.charAt(12), 10);
+        int d2Recebido = Character.digit(cnpj.charAt(13), 10);
 
         if (d1 == d1Recebido && d2 == d2Recebido) {
-            return True;
+            return true;
         }
 
         throw new IllegalArgumentException("CNPJ inválido: Dígitos verificadores não conferem");
     }
 
     public static boolean validarNome(String nome){
-        return(nome.matches("[A-Za-z ]+"));
+            return nome.matches("[A-Za-z ]+");
     }
 }

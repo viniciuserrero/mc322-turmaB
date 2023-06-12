@@ -1,5 +1,7 @@
-import java.time.LocalDate;
+package lab4;
+
 import java.util.List;
+import java.util.ArrayList;
 
 public class Seguradora {
     private String nome;
@@ -20,8 +22,8 @@ public class Seguradora {
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
-        this.listaSinistros = new List<>();
-        this.listaClientes = new List<>();
+        this.listaSinistros = new ArrayList<>();
+        this.listaClientes = new ArrayList<>();
     }
 
     // Getters e setters
@@ -71,22 +73,34 @@ public class Seguradora {
     }
 
     public void listarClientes(String tipo) {
+        System.out.println("Listando clientes do tipo "+ tipo + " da Seguradora \"" + this.nome + "\":");
+        boolean empty = true;
         for (Cliente clientAlt : this.listaClientes) {
             if (clientAlt instanceof ClientePF && tipo.equals("PF") || clientAlt instanceof ClientePJ && tipo.equals("PJ")) {
-                System.out.println("-----");
-                System.out.println(clientAlt.toString());
+                System.out.println(clientAlt.getNome());
+                empty = false;
             }
+        }
+        if (empty){
+            System.out.println("Sem clientes do tipo "+ tipo + " na Seguradora \"" + this.nome + "\"");
+        }
+        System.out.println("\n");
+    }
+
+    public void listarVeiculos(){
+        for(Cliente clienteAlt : this.listaClientes){
+            clienteAlt.listarVeiculos();
         }
     }
 
-    public boolean gerarSinistro(String data, String endereco, Veiculo veiculo, Cliente cliente) {
-        Sinistro sinistro = new Sinistro(data, endereco, this, veiculo, cliente);
+    public boolean gerarSinistro(Sinistro sinistro) {
         return this.listaSinistros.add(sinistro);
     }
 
     public boolean visualizarSinistro(String clientAlt) {
         for (Sinistro sinistro : this.listaSinistros) {
-            if (sinistro.getCliente().getNome().equals(clientAlt)) {
+            
+            if ((sinistro.getCliente().getNaturalPerson() && sinistro.getCliente().getCPF().equals(clientAlt)) || (!sinistro.getCliente().getNaturalPerson() && sinistro.getCliente().getCNPJ().equals(clientAlt))){
                 System.out.println("ID: " + sinistro.getID());
                 System.out.println("Data: " + sinistro.getData());
                 System.out.println("Endereço: " + sinistro.getEndereco());
@@ -100,10 +114,17 @@ public class Seguradora {
     }
 
     public void listarSinistros(){
-        System.out.println("Not implemented");
+        System.out.println("Listando sinistros da Seguradora \"" + this.nome + "\":");
+        for (Sinistro sinistroAlt : this.listaSinistros) {
+                System.out.println(sinistroAlt.toString());
+        }
+        if (this.listaSinistros.isEmpty()){
+            System.out.println("Sem sinistros na Seguradora " + this.nome);
+        }
+        System.out.println("\n");
     }
 
-    public List getListaClientes(){
+    public List<Cliente> getListaClientes(){
         return this.listaClientes;
     }
 

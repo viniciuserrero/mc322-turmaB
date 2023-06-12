@@ -1,3 +1,6 @@
+package lab4;
+
+import java.util.Date;
 import java.util.UUID;
 
 public class Sinistro {
@@ -10,7 +13,7 @@ public class Sinistro {
 
     // Construtor
     public Sinistro (
-        String data,
+        Date data,
         String endereco,
         Seguradora seguradora,
         Veiculo veiculo,
@@ -29,11 +32,11 @@ public class Sinistro {
         return id ;
     }
 
-    public String getData () {
+    public Date getData () {
         return data ;
     }
 
-    public void setData ( String data ) {
+    public void setData ( Date data ) {
         this.data = data ;
     }
 
@@ -75,7 +78,6 @@ public class Sinistro {
                 "Data: " + getData() + "\n" +
                 "Endereço: " + getEndereco() + "\n" +
                 "Seguradora: " + this.seguradora.getNome() + "\n\n" +
-                "Dados do cliente:\n" +
                 this.cliente.toString() +
                 "\n\n------";
     }

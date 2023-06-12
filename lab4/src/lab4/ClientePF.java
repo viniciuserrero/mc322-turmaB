@@ -1,5 +1,6 @@
-import java.time.LocalDate;
-import java.util.List;
+package lab4;
+
+import java.util.Date;
 
 public class ClientePF extends Cliente {
     private final String cpf;
@@ -22,7 +23,14 @@ public class ClientePF extends Cliente {
         // chama o construtor da superclasse
         super(nome, endereco, true);
 
-        this.cpf = Validacao.validarCPF(cpf);
+        if(Validacao.validarCPF(cpf)){
+            this.cpf = cpf;
+        }
+        
+        else{
+            this.cpf = null;
+        }
+        
         this.dataNascimento = dataNascimento;
         this.dataLicenca = dataLicenca;
         this.educacao = educacao;
@@ -32,6 +40,7 @@ public class ClientePF extends Cliente {
     }
 
     //Getters e setters
+    @Override
     public String getCPF() {
         return cpf;
     }
@@ -93,14 +102,14 @@ public class ClientePF extends Cliente {
 
     @Override
     public double calculaScore(){
-        Date today =  LocalDate.now();
-        float fator = getFator(today.getYear() - this.dataNascimento.getYear());
-        float base = CalcSeguro.VALOR_BASE.getValor();
+        Date today =  new Date();
+        double fator = getFator(today.getYear() - this.dataNascimento.getYear());
+        double base = CalcSeguro.VALOR_BASE.getFator();
         int numCarros = super.getListaVeiculos().size();
         return fator*base*numCarros;
     }
 
-    public float getFator(int age){
+    public double getFator(int age){
         if(age>90){
             throw new IllegalArgumentException("Muito idoso para dirigir");
         }
