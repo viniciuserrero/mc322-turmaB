@@ -1,5 +1,6 @@
 package lab4;
 
+import java.util.List;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -17,7 +18,18 @@ public class AppMain{
     private static final String SELECT_MESSAGE = "Selecione uma das opções abaixo:";
     private static final String BACK_MAIN_MENU_MESSAGE = "Voltando ao menu principal\n";
 
-    public static String nextLine(Scanner scanner){
+    private static boolean checkID(String id){
+        if(id.length() == 11){
+            Validacao.validarCPF(id);
+            return true;
+        }
+        else{
+            Validacao.validarCNPJ(id);
+            return false;
+        }
+    }
+
+    private static String nextLine(Scanner scanner){
         String line;
         do{
             line = scanner.nextLine().strip();
@@ -448,20 +460,139 @@ public class AppMain{
         }
     }
     
-    private static void excluirVeiculo(){
-        System.out.println("Currently not implemented");
+    private static void excluirVeiculo(Scanner scanner, ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos){
+        System.out.println("Qual a placa do veículo que deve ser excluída?");
+        String placa = nextLine(scanner);
+        
+        System.out.println("Digite o CPF/CNPJ do cliente");
+        String id = nextLine(scanner);
+        boolean typeID = checkID(id);
+        Veiculo toBeRemoved = null;
+
+        for (Veiculo veiculo: veiculos){
+            if(veiculo.getPlaca().equals(placa)){
+                veiculos.remove(veiculo);
+                toBeRemoved = veiculo;
+                break;
+            }
+        }
+
+        for(Cliente cliente : clientes){
+            if(toBeRemoved != null && (typeID && cliente.getCPF().equals(id)||!typeID && cliente.getCNPJ().equals(id))){
+                cliente.removeVeiculo(toBeRemoved);
+                System.out.println("Veiculo removido com sucesso");
+                break;
+            }
+        }
+        
     }
 
-    private static void excluirSinistro(){
-        System.out.println("Currently not implemented");
+    private static void excluirSinistro(Scanner scanner, ArrayList<Seguradora> seguradoras, ArrayList<Sinistro> sinistros){
+        System.out.println("Qual o nome da seguradora responsável pelo sinistro?");
+        String nomeSeguradora = nextLine(scanner);
+
+        System.out.println("Qual o ID do sinistro a ser excluído?");
+        int id = scanner.nextInt();
+        Sinistro toBeRemoved=null;
+
+        for(Sinistro sinistro : sinistros){
+            if(sinistro.getID() == id){
+                toBeRemoved = sinistro;
+                sinistros.remove(sinistro);
+                break;
+            }
+        }
+
+        for(Seguradora seguradora : seguradoras){
+            if(seguradora.getNome().equals(nomeSeguradora)){
+                seguradora.removerSinistro(toBeRemoved);
+                break;
+            }
+        }
     }
 
-    private static void gerarSinistro(){
-        System.out.println("Currently not implemented");
+    private static void gerarSinistro(Scanner scanner, ArrayList<Seguradora> seguradoras, ArrayList<Sinistro> sinistros, ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos){
+        Date today = new Date(); 
+
+        System.out.println("Qual o CPF/CNPJ do cliente?");
+        String id = nextLine(scanner);
+        boolean typeID = checkID(id);
+        Cliente cliente = null;
+
+        for(Cliente clienteAlt: clientes){
+            if(typeID && clienteAlt.getCPF().equals(id)||!typeID && clienteAlt.getCNPJ().equals(id)){
+                cliente = clienteAlt;
+            }
+        }
+        
+        System.out.println("Qual a placa do carro do cliente?");
+        String placa = nextLine(scanner);
+        Veiculo veiculo = null;
+        
+        for(Veiculo veiculoAlt: veiculos){
+            if(veiculoAlt.getPlaca().equals(placa)){
+                veiculo = veiculoAlt;
+            }
+        }
+
+        System.out.println("Qual o nome da seguradora do cliente?");
+        String nomeSeguradora = nextLine(scanner);
+
+        for(Seguradora seguradora: seguradoras){
+            if(seguradora.getNome().equals(nomeSeguradora)){
+                Sinistro newSinistro = new Sinistro(today, placa, seguradora, veiculo, cliente);
+                seguradora.gerarSinistro(newSinistro);
+                sinistros.add(newSinistro);
+            }
+        }
     }
 
-    private static void transferirSeguro(){
-        System.out.println("Currently not implemented");
+    private static void transferirSeguro(Scanner scanner, ArrayList<Cliente> clientes, ArrayList<Seguradora> seguradoras){
+        System.out.println("Qual o CPF/CNPJ do cliente origem?");
+        String idOrigem = nextLine(scanner);
+        boolean typeIDOrigem = checkID(idOrigem);
+        System.out.println("Qual a seguradora do cliente origem?");
+        String seguradoraOrigem = nextLine(scanner);
+
+        System.out.println("Qual o CPF/CNPJ do cliente destino?");
+        String idDestino = nextLine(scanner);
+        boolean typeIDDestino = checkID(idDestino);
+        System.out.println("Qual a seguradora do cliente destino?");
+        String seguradoraDestino = nextLine(scanner);
+
+        Cliente clienteOrigem = null;
+        Cliente clienteDestino = null;
+        Seguradora seguradoraOrigemObj = null;
+        Seguradora seguradoraDestinoObj = null;
+        List<Veiculo> veiculosTransferir = null;
+
+        for(Cliente clienteAlt: clientes){
+
+            if(typeIDOrigem && clienteAlt.getCPF().equals(idOrigem)||!typeIDOrigem && clienteAlt.getCNPJ().equals(idOrigem)){
+                clienteOrigem = clienteAlt;
+                veiculosTransferir = clienteOrigem.getListaVeiculos();
+            }
+
+            if(typeIDDestino && clienteAlt.getCPF().equals(idDestino)||!typeIDDestino && clienteAlt.getCNPJ().equals(typeIDDestino)){
+                clienteDestino = clienteAlt;
+            }
+        }
+
+        for(Seguradora seguradora : seguradoras){
+            if(seguradora.getNome().equals(seguradoraOrigem)){
+                seguradoraOrigemObj = seguradora;
+            }
+            if(seguradora.getNome().equals(seguradoraDestino)){
+                seguradoraDestinoObj = seguradora;
+            }
+        }
+
+        for(Veiculo veiculo: veiculosTransferir){
+            clienteDestino.addVeiculo(veiculo);
+            clienteOrigem.removeVeiculo(veiculo);
+        }
+
+        //todo: recalcular preço do seguro
     }
 
     private static void calcularReceita(){
@@ -556,11 +687,11 @@ public class AppMain{
                             break;
                             
                         case EXCLUIR_VEICULO:
-                            excluirVeiculo();
+                            // excluirVeiculo();
                             break;
 
                         case EXCLUIR_SINISTRO:
-                            excluirSinistro();
+                            // excluirSinistro();
                             break;
                         
                         case VOLTAR_EXCLUIR:
@@ -569,11 +700,11 @@ public class AppMain{
                     break;
 
                 case GERAR_SINISTRO:
-                    gerarSinistro();
+                    // gerarSinistro();
                     break;
 
                 case TRANSFERIR_SEGURO:
-                    transferirSeguro();
+                    // transferirSeguro();
                     break;
 
                 case CALCULAR_RECEITA:

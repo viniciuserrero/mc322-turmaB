@@ -124,6 +124,10 @@ public class Seguradora {
         System.out.println("\n");
     }
 
+    public void removerSinistro(Sinistro sinistro){
+        this.listaSinistros.remove(sinistro);
+    }
+
     public List<Cliente> getListaClientes(){
         return this.listaClientes;
     }

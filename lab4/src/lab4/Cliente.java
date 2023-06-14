@@ -61,6 +61,10 @@ public class Cliente {
     }
 
     // Funções relacionadas ao veiculos do cliente
+    public List<Veiculo> getListaVeiculos(){
+        return this.listaVeiculos;
+    }
+
     public void listarVeiculos() {
         System.out.println("Listando veículos de \"" + this.nome + "\":");
         for (Veiculo veiculoAlt : this.listaVeiculos) {
