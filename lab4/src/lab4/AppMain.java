@@ -335,6 +335,7 @@ public class AppMain{
         for(Seguradora seguradora: seguradoras){
             if (seguradora.getNome().equals(nome)){
                 seguradora.listarSinistros();
+                found = true;
                 break;
             }
         }
