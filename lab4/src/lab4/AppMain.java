@@ -312,22 +312,35 @@ public class AppMain{
         System.out.println("Digite " + colorString(ANSI_BLUE,"PF") + " para Pessoa Física");
         System.out.println("Digite "+ colorString(ANSI_BLUE,"PJ") + " para Pessoa Jurídica");
         String tipoClienteString = nextLine(scanner);
+        boolean found = false;
 
         for(Seguradora seguradora: seguradoras){
             if (seguradora.getNome().equals(nome)){
                 seguradora.listarClientes(tipoClienteString);
+                found = true;
+                break;
             }
+        }
+
+        if(!found){
+            System.out.println("Não foi possível completar sua solicitação");
         }
     }
 
     private static void listarSinistrosSeguradora(Scanner scanner, ArrayList<Seguradora> seguradoras){
         System.out.println("Qual o nome da seguradora que você deseja listar os sinistros?");
         String nome = nextLine(scanner);
+        boolean found = false;
 
         for(Seguradora seguradora: seguradoras){
             if (seguradora.getNome().equals(nome)){
                 seguradora.listarSinistros();
+                break;
             }
+        }
+        
+        if(!found){
+            System.out.println("Não foi possível completar sua solicitação");
         }
     }
 
@@ -562,8 +575,6 @@ public class AppMain{
 
         Cliente clienteOrigem = null;
         Cliente clienteDestino = null;
-        Seguradora seguradoraOrigemObj = null;
-        Seguradora seguradoraDestinoObj = null;
         List<Veiculo> veiculosTransferir = null;
 
         for(Cliente clienteAlt: clientes){
@@ -577,32 +588,38 @@ public class AppMain{
                 clienteDestino = clienteAlt;
             }
         }
-
-        for(Seguradora seguradora : seguradoras){
-            if(seguradora.getNome().equals(seguradoraOrigem)){
-                seguradoraOrigemObj = seguradora;
-            }
-            if(seguradora.getNome().equals(seguradoraDestino)){
-                seguradoraDestinoObj = seguradora;
-            }
-        }
-
+        
         for(Veiculo veiculo: veiculosTransferir){
             clienteDestino.addVeiculo(veiculo);
             clienteOrigem.removeVeiculo(veiculo);
         }
 
-        //todo: recalcular preço do seguro
+        for(Seguradora seguradora : seguradoras){
+            if(seguradora.getNome().equals(seguradoraOrigem)){
+                clienteOrigem.setValorSeguro(seguradora.calcularPrecoSeguroCliente(clienteOrigem));
+            }
+            if(seguradora.getNome().equals(seguradoraDestino)){
+                clienteDestino.setValorSeguro(seguradora.calcularPrecoSeguroCliente(clienteDestino));
+            }
+        }
     }
 
-    private static void calcularReceita(){
-        System.out.println("Currently not implemented");
+    private static void calcularReceita(Scanner scanner, ArrayList<Seguradora> seguradoras){
+        System.out.println("Deseja calcular a receita de qual seguradora?");
+        String nomeSeguradora = nextLine(scanner);
+        for(Seguradora seguradora : seguradoras){
+            if(seguradora.getNome().equals(nomeSeguradora)){
+                System.out.println("A receita da seguradora \"" + nomeSeguradora + "\" é igual a "+ seguradora.calcularReceita());
+            }
+        }
+
     }
     public static void main(String[] args){
         
         int numIter = 0;
-        ArrayList<Cliente> clientes = new ArrayList<>();
         ArrayList<Veiculo> veiculos = new ArrayList<>();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        ArrayList<Sinistro> sinistros = new ArrayList<>();
         ArrayList<Seguradora> seguradoras = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         
@@ -687,11 +704,11 @@ public class AppMain{
                             break;
                             
                         case EXCLUIR_VEICULO:
-                            // excluirVeiculo();
+                            excluirVeiculo(scanner,clientes,veiculos);
                             break;
 
                         case EXCLUIR_SINISTRO:
-                            // excluirSinistro();
+                            excluirSinistro(scanner,seguradoras,sinistros);
                             break;
                         
                         case VOLTAR_EXCLUIR:
@@ -700,15 +717,15 @@ public class AppMain{
                     break;
 
                 case GERAR_SINISTRO:
-                    // gerarSinistro();
+                    gerarSinistro(scanner,seguradoras,sinistros,clientes,veiculos);
                     break;
 
                 case TRANSFERIR_SEGURO:
-                    // transferirSeguro();
+                    transferirSeguro(scanner,clientes,seguradoras);
                     break;
 
                 case CALCULAR_RECEITA:
-                    calcularReceita();
+                    calcularReceita(scanner, seguradoras);
                     break;
 
                 case SAIR:
