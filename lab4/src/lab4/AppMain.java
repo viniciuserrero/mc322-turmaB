@@ -350,63 +350,24 @@ public class AppMain{
         System.out.println("Qual o nome da seguradora do cliente?");
         String nomeSeguradora = nextLine(scanner);
 
-        System.out.println("O cliente é pessoa física?"+ colorString(ANSI_BLUE, "[s/n]"));
-        String naturalPerson = nextLine(scanner).toLowerCase();
-
-        if(naturalPerson.charAt(0) == 's'){
-
-            System.out.println("Qual o CPF do cliente?");
-            String cpf = nextLine(scanner);
-            Validacao.validarCPF(cpf);
+        System.out.println("Qual o CPF/CNPJ do cliente?");
+        String id = nextLine(scanner);
+        checkID(id);
 
             for(Seguradora seguradora: seguradoras){
                 if (seguradora.getNome().equals(nomeSeguradora)){
-                    seguradora.visualizarSinistro(cpf);
+                    seguradora.visualizarSinistro(id);
                 }
             }
         }
-
-        else if(naturalPerson.charAt(0) == 'n'){
-
-            System.out.println("Qual o CNPJ do cliente?");
-            String cnpj = nextLine(scanner);
-            Validacao.validarCNPJ(cnpj);
-
-            for(Seguradora seguradora: seguradoras){
-                if (seguradora.getNome().equals(nomeSeguradora)){
-                    seguradora.visualizarSinistro(cnpj);
-                }
-            }
-        }
-        else{
-            throw new IllegalArgumentException("Opção inválida");
-        }
-    }
 
     private static void listarVeiculosCliente(Scanner scanner, ArrayList<Cliente> clientes){
-        System.out.println("O cliente é pessoa física?"+ colorString(ANSI_BLUE, "[s/n]"));
-        String naturalPerson = nextLine(scanner).toLowerCase();
-        String cpf=null;
-        String cnpj=null;
-        
-        if(naturalPerson.charAt(0) == 's'){
-            System.out.println("Qual o CPF do cliente?");
-            cpf = nextLine(scanner);
-            Validacao.validarCPF(cpf);
-        }
-        
-        else if(naturalPerson.charAt(0) == 'n'){
-            System.out.println("Qual o CNPJ do cliente?");
-            cnpj = nextLine(scanner);
-            Validacao.validarCNPJ(cnpj);
-        }
-        
-        else{
-            throw new IllegalArgumentException("Opção inválida");
-        }
+        System.out.println("Qual o CPF/CNPJ do cliente?");
+        String id = nextLine(scanner);
+        checkID(id);
 
         for(Cliente clienteAlt: clientes){
-            if((clienteAlt.getNaturalPerson() && clienteAlt.getCPF().equals(cpf))|| (!clienteAlt.getNaturalPerson() && clienteAlt.getCNPJ().equals(cnpj))){
+            if((clienteAlt.getNaturalPerson() && clienteAlt.getCPF().equals(id))|| (!clienteAlt.getNaturalPerson() && clienteAlt.getCNPJ().equals(id))){
                 clienteAlt.listarVeiculos();
                 break;
             }
@@ -428,49 +389,20 @@ public class AppMain{
         System.out.println("Qual o nome da seguradora do cliente?");
         String nomeSeguradora = nextLine(scanner);
 
-        System.out.println("O cliente é pessoa física?"+ colorString(ANSI_BLUE, "[s/n]"));
-        String naturalPerson = nextLine(scanner).toLowerCase();
+        System.out.println("Digite o CPF/CNPJ do cliente");
+        String id = nextLine(scanner);
+        boolean typeID = checkID(id);
 
-        if(naturalPerson.charAt(0) == 's'){
-
-            System.out.println("Qual o CPF do cliente?");
-            String cpf = nextLine(scanner);
-            Validacao.validarCPF(cpf);
-
-            for(Seguradora seguradora: seguradoras){
-                if (seguradora.getNome().equals(nomeSeguradora)){
-                    seguradora.removerCliente(cpf);
-                }
-            }
-
-            for(Cliente cliente: clientes){
-                if (cliente.getCPF().equals(cpf)){
-                    clientes.remove(cliente);
-                }
+        for(Seguradora seguradora: seguradoras){
+            if (seguradora.getNome().equals(nomeSeguradora)){
+                seguradora.removerCliente(id);
             }
         }
 
-        else if(naturalPerson.charAt(0) == 'n'){
-
-            System.out.println("Qual o CNPJ do cliente?");
-            String cnpj = nextLine(scanner);
-            Validacao.validarCNPJ(cnpj);
-
-            for(Seguradora seguradora: seguradoras){
-                if (seguradora.getNome().equals(nomeSeguradora)){
-                    seguradora.removerCliente(cnpj);
-                }
+        for(Cliente clienteAlt: clientes){
+            if((clienteAlt.getNaturalPerson() && clienteAlt.getCPF().equals(id))|| (!clienteAlt.getNaturalPerson() && clienteAlt.getCNPJ().equals(id))){
+                clientes.remove(clienteAlt);
             }
-            
-            for(Cliente cliente: clientes){
-                if (cliente.getCNPJ().equals(cnpj)){
-                    clientes.remove(cliente);
-                }
-            }
-        }
-
-        else{
-            throw new IllegalArgumentException("Opção inválida");
         }
     }
     
@@ -638,7 +570,7 @@ public class AppMain{
         
         clearConsole();
         
-        while(numIter < MAX_ITER){
+        while(numIter < MAX_ITER){ //good practice to avoid infinite loops
             mostrarMenuPrincipal();
             MenuOperacoes op = MenuOperacoes.values()[scanner.nextInt()];
 
