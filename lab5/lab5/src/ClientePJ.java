@@ -4,27 +4,27 @@ import java.util.Date;
 
 public class ClientePJ extends Cliente {
     private final String cnpj;
-    private Date dataFundacao;
+    private LocalDate dataFundacao;
     private int qtdeFuncionarios;
 
     public ClientePJ(
             String nome,
             String endereco,
             String cnpj,
-            Date dataFundacao,
+            LocalDate dataFundacao,
             int qtdeFuncionarios) {
-        
+
         // chama o construtor da superclasse
         super(nome, endereco, false);
 
         if(Validacao.validarCNPJ(cnpj)){
             this.cnpj = cnpj;
         }
-        
+
         else{
             this.cnpj = null;
         }
-        
+
         this.dataFundacao = dataFundacao;
         this.qtdeFuncionarios = qtdeFuncionarios;
     }
@@ -35,7 +35,7 @@ public class ClientePJ extends Cliente {
         return cnpj;
     }
 
-    public Date getDataFundacao() {
+    public LocalDate getDataFundacao() {
         return dataFundacao;
     }
 
@@ -53,8 +53,8 @@ public class ClientePJ extends Cliente {
 
     @Override
     public String toString() {
-        return "Dados do cliente(PJ):\n" + 
-                "Nome: " + super.getNome() + "\n" + 
+        return "Dados do cliente(PJ):\n" +
+                "Nome: " + super.getNome() + "\n" +
                 "Valor do seguro: " + super.getValorSeguro() + "\n" +
                 "Endereço: " + super.getEndereco() + "\n" +
                 "CNPJ: " + getCNPJ() + "\n" +
@@ -63,11 +63,4 @@ public class ClientePJ extends Cliente {
                 "Lista de veículos(" + getListaVeiculos().size() + "): " + getListaVeiculos();
     }
 
-    @Override
-    public double calculaScore(){
-        int numCarros = super.getListaVeiculos().size();
-        double base = CalcSeguro.VALOR_BASE.getFator();
-        double division = (1+(this.qtdeFuncionarios)/100);
-        return base*numCarros*division;
-    }
 }

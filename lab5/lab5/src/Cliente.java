@@ -3,7 +3,7 @@ package lab5;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Cliente {
+public abstract class Cliente {
     private String nome;
     private String endereco;
     private ArrayList<Veiculo> listaVeiculos;
@@ -11,12 +11,12 @@ public class Cliente {
     private boolean naturalPerson;
 
     // Construtor
-    public Cliente(String nome, String endereco, boolean naturalPerson) {
-        
+    protected Cliente(String nome, String endereco, boolean naturalPerson) {
+
         if(Validacao.validarNome(nome)){
             this.nome = nome;
         }
-        
+
         else{
             throw new IllegalArgumentException("Nome inválido: Apenas letras são permitidas");
         }
@@ -95,10 +95,6 @@ public class Cliente {
     }
 
     public String toString() {
-        throw new UnsupportedOperationException("This method must be overridden by a subclass.");
-    }
-
-    public double calculaScore(){
         throw new UnsupportedOperationException("This method must be overridden by a subclass.");
     }
 }

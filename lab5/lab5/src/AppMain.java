@@ -8,13 +8,13 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 
 public class AppMain{
-    
+
     private static final int MAX_ITER = 10000;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_BLUE = "\u001B[34m";
-    
+
     private static final String SELECT_MESSAGE = "Selecione uma das opções abaixo:";
     private static final String BACK_MAIN_MENU_MESSAGE = "Voltando ao menu principal\n";
 
@@ -45,12 +45,12 @@ public class AppMain{
         System.out.print("\033\143");
     }
 
-    private static Date parseData(String data){
+    private static LocalDate parseData(String data){
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/mm/yyyy");
         ParsePosition pos = new ParsePosition(0);
         return dataFormat.parse(data, pos);
     }
-    
+
     private static void mockData(ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos, ArrayList<Seguradora> seguradoras){
         String enderecoPF = "Rua Sete de Setembro, 29";
         String enderecoPJ = "Avenida Brasil, 576";
@@ -101,7 +101,7 @@ public class AppMain{
         System.out.println("Receita Seguradora \"" + seguradora1.getNome() + "\": " + seguradora1.calcularReceita());
         System.out.println("Receita Seguradora \"" + seguradora2.getNome() + "\": " + seguradora2.calcularReceita());
     }
-    
+
     private static void mostrarMenuPrincipal(){
         System.out.println(colorString(ANSI_YELLOW, "Menu principal:"));
         System.out.println(SELECT_MESSAGE);
@@ -122,7 +122,7 @@ public class AppMain{
         System.out.println(colorString(ANSI_BLUE, "3.") + " Cadastrar Seguradora");
         System.out.println(colorString(ANSI_BLUE, "4.") + " Voltar");
     }
-    
+
     private static void mostrarMenuListar(){
         System.out.println(ANSI_YELLOW + "Listar:" + ANSI_RESET);
         System.out.println(SELECT_MESSAGE);
@@ -147,13 +147,13 @@ public class AppMain{
         Cliente cliente = null;
         clearConsole();
         System.out.println(colorString(ANSI_YELLOW, "Cadastro de cliente"));
-        
+
         System.out.println("O cliente é pessoa física?"+ colorString(ANSI_BLUE, "[s/n]"));
         String naturalPerson = nextLine(scanner).toLowerCase();
-        
+
         System.out.println("Qual o nome do cliente?");
         String name = nextLine(scanner);
-        
+
         System.out.println("Qual o endereço do cliente?");
         String address = nextLine(scanner);
 
@@ -173,13 +173,13 @@ public class AppMain{
             String education = nextLine(scanner);
 
             System.out.println("Qual a data de nascimento do cliente? Formato [dd/mm/aaaa]");
-            Date dataNascimento = parseData(nextLine(scanner));
+            LocalDate dataNascimento = parseData(nextLine(scanner));
 
             System.out.println("Qual a data de licença do cliente? Formato [dd/mm/aaaa]");
-            Date dataLicenca = parseData(nextLine(scanner));
+            LocalDate dataLicenca = parseData(nextLine(scanner));
 
             cliente = new ClientePF(name, address, cpf, dataNascimento, dataLicenca, education, gender, wealth);
-            
+
         }
         else if(naturalPerson.charAt(0) == 'n'){
 
@@ -188,7 +188,7 @@ public class AppMain{
             Validacao.validarCNPJ(cnpj);
 
             System.out.println("Qual a data da fundação do cliente?");
-            Date dataFundacao = parseData(scanner.nextLine());
+            LocalDate dataFundacao = parseData(scanner.nextLine());
 
             System.out.println("Qual a quantidade de funcionários do cliente?");
             int qtdeFuncionarios = scanner.nextInt();
@@ -202,10 +202,10 @@ public class AppMain{
         }
 
         clientes.add(cliente);
-        
+
         System.out.println("Qual o nome da seguradora do cliente?");
         String nomeSeguradora = nextLine(scanner);
-        
+
         boolean found = false;
         for(Seguradora seguradoraAlt : seguradoras){
             if (seguradoraAlt.getNome().equals(nomeSeguradora)){
@@ -215,19 +215,19 @@ public class AppMain{
                 break;
             }
         }
-        
+
         if(!found){
             System.out.println("A seguradora \"" + nomeSeguradora + "\" não foi encontrada.");
             System.out.println("Abrindo menu de cadastro de seguradora");
             cadastrarSeguradora(scanner, seguradoras);
         }
-        
+
     }
-    
+
     private static void cadastrarVeiculo(Scanner scanner, ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos){
 
         System.out.println(colorString(ANSI_YELLOW,"Cadastro de veículo"));
-        
+
         String marcaCarro = scanner.nextLine();
         System.out.println("Qual a marca do veículo?");
 
@@ -259,7 +259,7 @@ public class AppMain{
                 }
             }
         }
-        
+
         else if(tipoDonoCarro == 2){
             System.out.println("Qual o CNPJ do dono do veículo?");
             String cnpj = scanner.nextLine();
@@ -283,7 +283,7 @@ public class AppMain{
 
     private static void cadastrarSeguradora(Scanner scanner, ArrayList<Seguradora> seguradoras){
         System.out.println(colorString(ANSI_YELLOW,"Cadastro de seguradora"));
-        
+
         System.out.println("Qual o nome da seguradora?");
         String nomeSeguradora = nextLine(scanner);
 
@@ -301,13 +301,13 @@ public class AppMain{
 
         System.out.println("Seguradora \"" + nomeSeguradora + "\" adicionada com sucesso");
         System.out.println(BACK_MAIN_MENU_MESSAGE);
-        
+
     }
-    
+
     private static void listarClienteSeguradora(Scanner scanner, ArrayList<Seguradora> seguradoras){
         System.out.println("Qual o nome da seguradora que você deseja listar os clientes?");
         String nome = nextLine(scanner);
-        
+
         System.out.println("Deseja listar clientes do tipo pessoa física ou jurídica?");
         System.out.println("Digite " + colorString(ANSI_BLUE,"PF") + " para Pessoa Física");
         System.out.println("Digite "+ colorString(ANSI_BLUE,"PJ") + " para Pessoa Jurídica");
@@ -339,7 +339,7 @@ public class AppMain{
                 break;
             }
         }
-        
+
         if(!found){
             System.out.println("Não foi possível completar sua solicitação");
         }
@@ -373,7 +373,7 @@ public class AppMain{
             }
         }
     }
-    
+
     private static void listarVeiculosSeguradora(Scanner scanner, ArrayList<Seguradora> seguradoras){
         System.out.println("Qual o nome da seguradora?");
         String nomeSeguradora = nextLine(scanner);
@@ -383,9 +383,9 @@ public class AppMain{
             }
         }
     }
-    
+
     private static void excluirCliente(Scanner scanner, ArrayList<Cliente> clientes, ArrayList<Seguradora> seguradoras){
-        
+
         System.out.println("Qual o nome da seguradora do cliente?");
         String nomeSeguradora = nextLine(scanner);
 
@@ -405,11 +405,11 @@ public class AppMain{
             }
         }
     }
-    
+
     private static void excluirVeiculo(Scanner scanner, ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos){
         System.out.println("Qual a placa do veículo que deve ser excluída?");
         String placa = nextLine(scanner);
-        
+
         System.out.println("Digite o CPF/CNPJ do cliente");
         String id = nextLine(scanner);
         boolean typeID = checkID(id);
@@ -430,7 +430,7 @@ public class AppMain{
                 break;
             }
         }
-        
+
     }
 
     private static void excluirSinistro(Scanner scanner, ArrayList<Seguradora> seguradoras, ArrayList<Sinistro> sinistros){
@@ -458,7 +458,7 @@ public class AppMain{
     }
 
     private static void gerarSinistro(Scanner scanner, ArrayList<Seguradora> seguradoras, ArrayList<Sinistro> sinistros, ArrayList<Cliente> clientes, ArrayList<Veiculo> veiculos){
-        Date today = new Date(); 
+        LocalDate today = new Date();
 
         System.out.println("Qual o CPF/CNPJ do cliente?");
         String id = nextLine(scanner);
@@ -470,11 +470,11 @@ public class AppMain{
                 cliente = clienteAlt;
             }
         }
-        
+
         System.out.println("Qual a placa do carro do cliente?");
         String placa = nextLine(scanner);
         Veiculo veiculo = null;
-        
+
         for(Veiculo veiculoAlt: veiculos){
             if(veiculoAlt.getPlaca().equals(placa)){
                 veiculo = veiculoAlt;
@@ -521,7 +521,7 @@ public class AppMain{
                 clienteDestino = clienteAlt;
             }
         }
-        
+
         for(Veiculo veiculo: veiculosTransferir){
             clienteDestino.addVeiculo(veiculo);
             clienteOrigem.removeVeiculo(veiculo);
@@ -548,28 +548,28 @@ public class AppMain{
 
     }
     public static void main(String[] args){
-        
+
         int numIter = 0;
         ArrayList<Veiculo> veiculos = new ArrayList<>();
         ArrayList<Cliente> clientes = new ArrayList<>();
         ArrayList<Sinistro> sinistros = new ArrayList<>();
         ArrayList<Seguradora> seguradoras = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        
+
         clearConsole();
-        
+
         // Mock data
         System.out.println("Deseja testar com dados fictícios?"+ colorString(ANSI_BLUE, "[s/n]"));
         Character mock = nextLine(scanner).toLowerCase().charAt(0);
-        
+
         if(mock =='s'){
             mockData(clientes,veiculos,seguradoras);
             System.out.println("Pressione qualquer tecla pra continuar");
             scanner.nextLine();
         }
-        
+
         clearConsole();
-        
+
         while(numIter < MAX_ITER){ //good practice to avoid infinite loops
             mostrarMenuPrincipal();
             MenuOperacoes op = MenuOperacoes.values()[scanner.nextInt()];
@@ -578,11 +578,11 @@ public class AppMain{
                 case CADASTRAR:
                     clearConsole();
                     mostrarMenuCadastrar();
-                    SubmenuCadastrar opCad = SubmenuCadastrar.values()[scanner.nextInt()-1]; 
+                    SubmenuCadastrar opCad = SubmenuCadastrar.values()[scanner.nextInt()-1];
                     switch(opCad){
                         case CADASTRAR_CLIENTE_PF_PJ:
                             cadastrarClientePFPJ(scanner, clientes, seguradoras);
-                            break;    
+                            break;
                         case CADASTRAR_VEICULO:
                             cadastrarVeiculo(scanner, clientes, veiculos);
                             break;
@@ -602,9 +602,9 @@ public class AppMain{
                     switch(opList){
 
                         case LISTAR_CLIENTE_SEG:
-                            listarClienteSeguradora(scanner, seguradoras);    
+                            listarClienteSeguradora(scanner, seguradoras);
                             break;
-                        
+
                         case LISTAR_SINISTRO_SEG:
                             listarSinistrosSeguradora(scanner, seguradoras);
                             break;
@@ -612,7 +612,7 @@ public class AppMain{
                         case LISTAR_SINISTRO_CLIENTE:
                             listarSinistrosCliente(scanner,seguradoras);
                             break;
-                        
+
                         case LISTAR_VEICULO_CLIENTE:
                             listarVeiculosCliente(scanner, clientes);
                             break;
@@ -633,9 +633,9 @@ public class AppMain{
 
                     switch(opExcl){
                         case EXCLUIR_CLIENTE:
-                            excluirCliente(scanner,clientes, seguradoras); 
+                            excluirCliente(scanner,clientes, seguradoras);
                             break;
-                            
+
                         case EXCLUIR_VEICULO:
                             excluirVeiculo(scanner,clientes,veiculos);
                             break;
@@ -643,7 +643,7 @@ public class AppMain{
                         case EXCLUIR_SINISTRO:
                             excluirSinistro(scanner,seguradoras,sinistros);
                             break;
-                        
+
                         case VOLTAR_EXCLUIR:
                             break;
                     }

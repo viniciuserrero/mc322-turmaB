@@ -9,7 +9,7 @@ public class Condutor {
     private String telefone;
     private String endereco;
     private String email;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private ArrayList<Veiculo> listaSinistros;
 
     public Condutor(
@@ -18,17 +18,17 @@ public class Condutor {
             String telefone,
             String endereco,
             String email,
-            Date dataNascimento,
-            ArrayList<Veiculo> listaSinistros) {
+            LocalDate dataNascimento,
+            List<Veiculo> listaSinistros) {
 
         if(Validacao.validarCPF(cpf)){
             this.cpf = cpf;
         }
-        
+
         else{
             this.cpf = null;
         }
-        
+
         this.nome = nome;
         this.telefone = telefone;
         this.endereco = endereco;
@@ -74,7 +74,7 @@ public class Condutor {
         this.email = email;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 

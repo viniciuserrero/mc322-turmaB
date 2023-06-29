@@ -6,18 +6,18 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Seguro {
+public abstract class Seguro {
     private final int id ;
-    private Date dataInicio ;
-    private Date dataFim ;
+    private LocalDate dataInicio ;
+    private LocalDate dataFim ;
     private Seguradora seguradora ;
     private ArrayList<Veiculo> listaVeiculos;
     private ArrayList<Condutor> listaCondutores;
     private int valorMensal;
 
-    public Seguro(
-        Date dataInicio,
-        Date dataFim,
+    protected Seguro(
+        LocalDate dataInicio,
+        LocalDate dataFim,
         Seguradora seguradora,
         List<Veiculo> listaVeiculos,
         List<Condutor> listaCondutores,
@@ -30,25 +30,25 @@ public class Seguro {
             this.listaCondutores = listaCondutores;
             this.valorMensal = valorMensal;
         }
-        
+
         // Getters e setters
         public int getID () {
             return id ;
         }
 
-        public Date getDataInicio () {
+        public LocalDate getDataInicio () {
             return dataInicio ;
         }
 
-        public void setDataInicio ( Date dataInicio ) {
+        public void setDataInicio ( LocalDate dataInicio ) {
             this.dataInicio = dataInicio ;
         }
 
-        public Date getDataFim () {
+        public LocalDate getDataFim () {
             return dataFim ;
         }
 
-        public void setDataFim ( Date dataFim ) {
+        public void setDataFim ( LocalDate dataFim ) {
             this.dataFim = dataFim ;
         }
 
@@ -84,7 +84,7 @@ public class Seguro {
             this.valorMensal = valorMensal ;
         }
 
-        public void autozizarCondutor(Condutor condutor){
+        public void autorizarCondutor(Condutor condutor){
             listaCondutores.add(condutor);
         }
 
@@ -95,11 +95,13 @@ public class Seguro {
         public int calcularValor(){
             return 0;
         }
+
         // Generate id
         private int generateID() {
             UUID randomId = UUID.randomUUID();
             return (randomId.hashCode() & Integer.MAX_VALUE);
         }
+
         //tostring
         public String toString() {
             return "Seguro:\ndataFim=" + dataFim + ", dataInicio=" + dataInicio + ", id=" + id + ", listaCondutores="

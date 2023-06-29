@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Sinistro {
     private final int id ;
-    private Date data ;
+    private LocalDate data ;
     private String endereco ;
     private Seguradora seguradora ;
     private Veiculo veiculo ;
@@ -13,7 +13,7 @@ public class Sinistro {
 
     // Construtor
     public Sinistro (
-        Date data,
+        LocalDate data,
         String endereco,
         Seguradora seguradora,
         Veiculo veiculo,
@@ -32,11 +32,11 @@ public class Sinistro {
         return id ;
     }
 
-    public Date getData () {
+    public LocalDate getData () {
         return data ;
     }
 
-    public void setData ( Date data ) {
+    public void setData ( LocalDate data ) {
         this.data = data ;
     }
 
@@ -73,8 +73,8 @@ public class Sinistro {
     }
 
     public String toString(){
-        return "Dados do sinistro:\n" + 
-                "ID: " + getID() + "\n" + 
+        return "Dados do sinistro:\n" +
+                "ID: " + getID() + "\n" +
                 "Data: " + getData() + "\n" +
                 "Endereço: " + getEndereco() + "\n" +
                 "Seguradora: " + this.seguradora.getNome() + "\n\n" +

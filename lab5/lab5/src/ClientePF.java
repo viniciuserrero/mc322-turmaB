@@ -1,11 +1,11 @@
 package lab5;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ClientePF extends Cliente {
     private final String cpf;
-    private Date dataNascimento;
-    private Date dataLicenca;
+    private LocalDate dataNascimento;
+    private LocalDate dataLicenca;
     private String educacao;
     private String genero;
     private String classeEconomica;
@@ -14,8 +14,8 @@ public class ClientePF extends Cliente {
             String nome,
             String endereco,
             String cpf,
-            Date dataNascimento,
-            Date dataLicenca,
+            LocalDate dataNascimento,
+            LocalDate dataLicenca,
             String educacao,
             String genero,
             String classeEconomica) {
@@ -26,11 +26,11 @@ public class ClientePF extends Cliente {
         if(Validacao.validarCPF(cpf)){
             this.cpf = cpf;
         }
-        
+
         else{
             this.cpf = null;
         }
-        
+
         this.dataNascimento = dataNascimento;
         this.dataLicenca = dataLicenca;
         this.educacao = educacao;
@@ -45,19 +45,24 @@ public class ClientePF extends Cliente {
         return cpf;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public Date getDataLicenca() {
+    public int getIdade() {
+        LocalDate now = LocalDate.now();
+        return now.getYear() - dataNascimento.getYear();
+    }
+
+    public LocalDate getDataLicenca() {
         return dataLicenca;
     }
 
-    public void setDataLicenca(Date dataLicenca) {
+    public void setDataLicenca(LocalDate dataLicenca) {
         this.dataLicenca = dataLicenca;
     }
 
@@ -87,8 +92,8 @@ public class ClientePF extends Cliente {
 
     @Override
     public String toString() {
-        return "Dados do cliente(PF):\n" + 
-                "Nome: " + super.getNome() + "\n" + 
+        return "Dados do cliente(PF):\n" +
+                "Nome: " + super.getNome() + "\n" +
                 "Valor do seguro: " + super.getValorSeguro() + "\n" +
                 "Endereço: " + super.getEndereco() + "\n" +
                 "CPF: " + getCPF() + "\n" +
@@ -98,32 +103,5 @@ public class ClientePF extends Cliente {
                 "Gênero: " + getGenero() + "\n" +
                 "Classe Econômica: " + getClasseEconomica() + "\n" +
                 "Lista de veículos(" + super.getListaVeiculos().size() + "): " + getListaVeiculos();
-    }
-
-    @Override
-    public double calculaScore(){
-        Date today =  new Date();
-        double fator = getFator(today.getYear() - this.dataNascimento.getYear());
-        double base = CalcSeguro.VALOR_BASE.getFator();
-        int numCarros = super.getListaVeiculos().size();
-        return fator*base*numCarros;
-    }
-
-    public double getFator(int age){
-        if(age>90){
-            throw new IllegalArgumentException("Muito idoso para dirigir");
-        }
-        else if(age>=60){
-            return CalcSeguro.FATOR_60_90.getFator();
-        }
-        else if(age>=30){
-            return CalcSeguro.FATOR_30_60.getFator();
-        }
-        else if(age>=18){
-            return CalcSeguro.FATOR_18_30.getFator();
-        }
-        else{
-            throw new IllegalArgumentException("Muito novo para dirigir");
-        }
     }
 }

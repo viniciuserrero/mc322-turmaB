@@ -4,29 +4,42 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Seguradora {
+    private final String cnpj;
     private String nome;
     private String telefone;
-    private String email;
     private String endereco;
-    private List<Sinistro> listaSinistros;
+    private String email;
     private List<Cliente> listaClientes;
+    private List<Seguro> listaSeguros;
 
     // Construtor
     public Seguradora(
+        String cnpj,
         String nome,
         String telefone,
         String email,
         String endereco) {
+        
+        if(Validacao.validarCNPJ(cnpj)){
+            this.cnpj = cnpj;
+        }
 
+        else{
+            this.cnpj = null;
+        }
         this.nome = nome;
         this.telefone = telefone;
-        this.email = email;
         this.endereco = endereco;
-        this.listaSinistros = new ArrayList<>();
-        this.listaClientes = new ArrayList<>();
+        this.email = email;
+        this.listaClientes = new List<>();
+        this.listaSeguros = new List<>();
     }
 
     // Getters e setters
+    public String getCNPJ() {
+        return cnpj;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -99,7 +112,7 @@ public class Seguradora {
 
     public boolean visualizarSinistro(String clientAlt) {
         for (Sinistro sinistro : this.listaSinistros) {
-            
+
             if ((sinistro.getCliente().getNaturalPerson() && sinistro.getCliente().getCPF().equals(clientAlt)) || (!sinistro.getCliente().getNaturalPerson() && sinistro.getCliente().getCNPJ().equals(clientAlt))){
                 System.out.println("ID: " + sinistro.getID());
                 System.out.println("Data: " + sinistro.getData());
@@ -132,9 +145,18 @@ public class Seguradora {
         return this.listaClientes;
     }
 
+    public List<Sinistro> getSinistrosPorCliente(Cliente cliente){
+        List<Sinistro> sinistros = new List<>();
+        for (Seguro sinistro : this.listaSinistros){
+            if (sinistro.getCliente().equals(cliente)){
+                seguros.add(sinistro.getSeguro());
+            }
+        }
+        return sinistros;
+    }
     public double calcularPrecoSeguroCliente(Cliente clientAlt){
         int qtdSinistros = 0;
-        
+
         for (Sinistro _sinistro : this.listaSinistros){
             String nomeAlt = _sinistro.getCliente().getNome();
             if(clientAlt.getNome().equals(nomeAlt)){
@@ -143,7 +165,7 @@ public class Seguradora {
         }
 
         double score = clientAlt.calculaScore();
-        
+
         return score*(1+qtdSinistros);
     }
 
